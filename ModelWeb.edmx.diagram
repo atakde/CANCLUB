@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b255ba5f479241caa0e6ba17f31e074f" Name="Diagram1">
+        <EntityTypeShape EntityType="WebProjectModel.Users" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebProjectModel.Activities" Width="1.5" PointX="3" PointY="1.125" />
+        <AssociationConnector Association="WebProjectModel.FK_Activities_Users" />
+        <EntityTypeShape EntityType="WebProjectModel.Comments" Width="1.5" PointX="5.625" PointY="1.25" />
+        <EntityTypeShape EntityType="WebProjectModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="WebProjectModel.FK_Comments_Activities" />
+        <AssociationConnector Association="WebProjectModel.FK_Comments_Users" />
+        <EntityTypeShape EntityType="WebProjectModel.Likes" Width="1.5" PointX="3.375" PointY="4.875" />
+        <AssociationConnector Association="WebProjectModel.FK_Likes_Activities" />
+        <AssociationConnector Association="WebProjectModel.FK_Likes_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
