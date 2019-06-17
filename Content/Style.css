@@ -1,0 +1,27 @@
+﻿.header {
+    width: 700px;
+    height: 150px;
+    margin-left: 300px;
+    background-color: #FF9933;
+}
+
+.body {
+    width: 700px;
+    height: 300px;
+    margin-left: 300px;
+    background-color: #FF0000;
+}
+
+.footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.header-bosluk {
+    width: 700px;
+    height: 10px;
+    margin-left: 300px;
+}

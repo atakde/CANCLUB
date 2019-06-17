@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WebProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Precision="3" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Image" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Activities" Relationship="WebProjectModel.FK_Activities_Users" FromRole="Users" ToRole="Activities" />
+    <NavigationProperty Name="Comments" Relationship="WebProjectModel.FK_Comments_Users" FromRole="Users" ToRole="Comments" />
+    <NavigationProperty Name="Likes" Relationship="WebProjectModel.FK_Likes_Users" FromRole="Users" ToRole="Likes" />
+    <Property Name="Role" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="ModelWebEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="Activities" EntityType="WebProjectModel.Activities" />
+    <AssociationSet Name="FK_Activities_Users" Association="WebProjectModel.FK_Activities_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Activities" EntitySet="Activities" />
+    </AssociationSet>
+    <EntitySet Name="Comments" EntityType="WebProjectModel.Comments" />
+    <EntitySet Name="sysdiagrams" EntityType="WebProjectModel.sysdiagrams" />
+    <AssociationSet Name="FK_Comments_Activities" Association="WebProjectModel.FK_Comments_Activities">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Comments_Users" Association="WebProjectModel.FK_Comments_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Comments" EntitySet="Comments" />
+    </AssociationSet>
+    <EntitySet Name="Likes" EntityType="WebProjectModel.Likes" />
+    <AssociationSet Name="FK_Likes_Activities" Association="WebProjectModel.FK_Likes_Activities">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="Likes" EntitySet="Likes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Likes_Users" Association="WebProjectModel.FK_Likes_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Likes" EntitySet="Likes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="activity_by" Type="Int32" />
+    <Property Name="activity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="WebProjectModel.FK_Activities_Users" FromRole="Activities" ToRole="Users" />
+    <NavigationProperty Name="Comments" Relationship="WebProjectModel.FK_Comments_Activities" FromRole="Activities" ToRole="Comments" />
+    <NavigationProperty Name="Likes" Relationship="WebProjectModel.FK_Likes_Activities" FromRole="Activities" ToRole="Likes" />
+    <Property Name="totalLikes" Type="Int32" />
+    <Property Name="totalDisslike" Type="Int32" />
+    <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="score" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_Activities_Users">
+    <End Type="WebProjectModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="WebProjectModel.Activities" Role="Activities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Activities">
+        <PropertyRef Name="activity_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Comments">
+    <Key>
+      <PropertyRef Name="comment_id" />
+    </Key>
+    <Property Name="comment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="activity_id" Type="Int32" />
+    <Property Name="comment_include" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="user_id" Type="Int32" />
+    <NavigationProperty Name="Activities" Relationship="WebProjectModel.FK_Comments_Activities" FromRole="Comments" ToRole="Activities" />
+    <NavigationProperty Name="Users" Relationship="WebProjectModel.FK_Comments_Users" FromRole="Comments" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Comments_Activities">
+    <End Type="WebProjectModel.Activities" Role="Activities" Multiplicity="0..1" />
+    <End Type="WebProjectModel.Comments" Role="Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="activity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Comments_Users">
+    <End Type="WebProjectModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="WebProjectModel.Comments" Role="Comments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Comments">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Likes">
+    <Key>
+      <PropertyRef Name="like_id" />
+    </Key>
+    <Property Name="like_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="activity_id" Type="Int32" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="good" Type="Int32" />
+    <Property Name="bad" Type="Int32" />
+    <NavigationProperty Name="Activities" Relationship="WebProjectModel.FK_Likes_Activities" FromRole="Likes" ToRole="Activities" />
+    <NavigationProperty Name="Users" Relationship="WebProjectModel.FK_Likes_Users" FromRole="Likes" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_Likes_Activities">
+    <End Type="WebProjectModel.Activities" Role="Activities" Multiplicity="0..1" />
+    <End Type="WebProjectModel.Likes" Role="Likes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Likes">
+        <PropertyRef Name="activity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Likes_Users">
+    <End Type="WebProjectModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="WebProjectModel.Likes" Role="Likes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Likes">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
